@@ -94,7 +94,8 @@ function createWindow() {
             nodeIntegration: false,
             contextIsolation: true,
             sandbox: false
-        }
+        },
+        autoHideMenuBar: true
     });
 
     win.webContents.setUserAgent(
