@@ -1,0 +1,28 @@
+{
+  "name": "discord_tor",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kurama.info",
+  "license": "ISC",
+  "description": "Discord Tor",
+  "dependencies": {
+    "adm-zip": "^0.5.16"
+  },
+  "devDependencies": {
+    "electron": "^34.3.0",
+    "electron-builder": "^24.2.0"
+  },
+  "build": {
+    "appId": "kurama.info.discord-tor",
+    "productName": "Discord Tor",
+    "win": {
+      "icon": "img/app-icon.ico",
+      "target": "nsis"
+    }
+  }
+}
