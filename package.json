@@ -10,9 +10,6 @@
   "author": "Kurama.info",
   "license": "ISC",
   "description": "Discord Tor",
-  "dependencies": {
-    "adm-zip": "^0.5.16"
-  },
   "devDependencies": {
     "electron": "^34.3.0",
     "electron-builder": "^24.2.0"
