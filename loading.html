@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Tor - Connecting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #2c2f33;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .loading-container {
+            background: #36393f;
+            padding: 40px;
+            text-align: center;
+            width: 400px;
+            max-width: 90vw;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .status {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #ffffff;
+            min-height: 30px;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #40444b;
+            border-top: 4px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #40444b;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #ffffff;
+            width: 0%;
+            transition: width 0.3s ease;
+            animation: progress 2s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        .info {
+            font-size: 0.9em;
+            color: #72767d;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <div class="logo">Discord Tor</div>
+        <div class="status" id="status">Initializing...</div>
+        <div class="spinner"></div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="info">
+            Secure connection via Tor network
+        </div>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+        const statusElement = document.getElementById('status');
+        const progressFill = document.querySelector('.progress-fill');
+
+        ipcRenderer.on('update-status', (event, message) => {
+            statusElement.textContent = message;
+            
+            if (message.includes('Downloading')) {
+                progressFill.style.animation = 'progress 2s ease-in-out infinite';
+            } else if (message.includes('Extracting')) {
+                progressFill.style.animation = 'progress 1.5s ease-in-out infinite';
+            } else if (message.includes('Connecting')) {
+                progressFill.style.animation = 'progress 1s ease-in-out infinite';
+            } else if (message.includes('established') || message.includes('complete')) {
+                progressFill.style.width = '100%';
+                progressFill.style.animation = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
